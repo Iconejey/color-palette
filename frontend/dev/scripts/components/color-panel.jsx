@@ -1,5 +1,5 @@
 class ColorPanel {
-	// <color-panel />
+	// <color-panel .moving />
 
 	static getRGB(color) {
 		return color.match(/\w\w/g).map(x => parseInt(x, 16));
@@ -137,6 +137,45 @@ class ColorPanel {
 			// Show check icon for 500ms
 			copy.innerText = 'check';
 			setTimeout(() => (copy.innerText = 'copy_all'), 500);
+		};
+
+		// Move btn
+		const move = this.querySelector('#move');
+
+		// Listen for move button mousedown
+		move.onmousedown = e => {
+			// Set panel to be moved
+			this.moving = true;
+
+			// Check if app is in landscape mode
+			const ls = window.innerWidth > window.innerHeight;
+
+			// Save mouse position
+			this.move_start = ls ? e.clientX : e.clientY;
+		};
+
+		// Listen for panel mouseup
+		this.onmouseup = e => {
+			// Reset panel to be moved
+			this.moving = false;
+
+			// Remove panel transform
+			this.style.transform = '';
+		};
+
+		// Listen for panel mousemove
+		this.onmousemove = e => {
+			// Only panel is being moved
+			if (!this.moving) return;
+
+			// Check if app is in landscape mode
+			const ls = window.innerWidth > window.innerHeight;
+
+			// Get mouse position
+			const pos = ls ? e.clientX : e.clientY;
+
+			// Set panel transform
+			this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
 		};
 	}
 
