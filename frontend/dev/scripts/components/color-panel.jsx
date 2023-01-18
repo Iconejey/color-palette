@@ -82,27 +82,59 @@ class ColorPanel {
 
 		// Listen for left add button hover
 		add_left.onmouseenter = e => {
-			// Get left panel color or default to black
-			const left_color = this.previousElementSibling?.color ?? '#000000';
-
-			// Mix with current color
-			const mixed = ColorPanel.mix(this.color, left_color);
+			// Get left panel color
+			const mixed = this.getLeftMixedColor();
+			const text_color = ColorPanel.isBright(mixed) ? 'black' : 'white';
 
 			// Set btn background color
-			add_left.setAttribute('style', `background-color: ${mixed}; color: ${ColorPanel.isBright(mixed) ? 'black' : 'white'}`);
+			add_left.setAttribute('style', `background-color: ${mixed}; color: ${text_color}`);
+		};
+
+		// Listen for left add button click
+		add_left.onclick = e => {
+			// Get left panel color
+			const mixed = this.getLeftMixedColor();
+
+			// Create new panel
+			const panel = <color-panel color={mixed} />;
+			this.parentElement.insertBefore(panel, this);
 		};
 
 		// Listen for right add button hover
 		add_right.onmouseenter = e => {
-			// Get right panel color or default to white
-			const right_color = this.nextElementSibling?.color ?? '#ffffff';
-
-			// Mix with current color
-			const mixed = ColorPanel.mix(this.color, right_color);
+			// Get right panel color
+			const mixed = this.getRightMixedColor();
+			const text_color = ColorPanel.isBright(mixed) ? 'black' : 'white';
 
 			// Set btn background color
-			add_right.setAttribute('style', `background-color: ${mixed}; color: ${ColorPanel.isBright(mixed) ? 'black' : 'white'}`);
+			add_right.setAttribute('style', `background-color: ${mixed}; color: ${text_color}`);
 		};
+
+		// Listen for right add button click
+		add_right.onclick = e => {
+			// Get right panel color
+			const mixed = this.getRightMixedColor();
+
+			// Create new panel
+			const panel = <color-panel color={mixed} />;
+			this.parentElement.insertBefore(panel, this.nextElementSibling);
+		};
+	}
+
+	getLeftMixedColor() {
+		// Get left panel color or default to black
+		const left_color = this.previousElementSibling?.color ?? '#000000';
+
+		// Mix with current color
+		return ColorPanel.mix(this.color, left_color);
+	}
+
+	getRightMixedColor() {
+		// Get right panel color or default to white
+		const right_color = this.nextElementSibling?.color ?? '#ffffff';
+
+		// Mix with current color
+		return ColorPanel.mix(this.color, right_color);
 	}
 
 	set color(color) {
