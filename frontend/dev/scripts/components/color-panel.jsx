@@ -172,10 +172,31 @@ class ColorPanel {
 			const ls = window.innerWidth > window.innerHeight;
 
 			// Get mouse position
-			const pos = ls ? e.clientX : e.clientY;
+			let pos = ls ? e.clientX : e.clientY;
 
 			// Set panel transform
 			this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
+
+			// Get panel size
+			const size = ls ? this.offsetWidth : this.offsetHeight;
+
+			// Switch with left panel
+			if (pos - this.move_start < -size / 2) {
+				const prev = this.previousElementSibling;
+				const prev_size = ls ? prev.offsetWidth : prev.offsetHeight;
+				this.parentElement.insertBefore(this, prev);
+				this.move_start -= prev_size;
+				this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
+			}
+
+			// Switch with right panel
+			if (pos - this.move_start > size / 2) {
+				const next = this.nextElementSibling;
+				const next_size = ls ? next.offsetWidth : next.offsetHeight;
+				this.parentElement.insertBefore(next, this);
+				this.move_start += next_size;
+				this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
+			}
 		};
 	}
 
