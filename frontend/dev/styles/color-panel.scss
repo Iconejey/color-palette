@@ -42,7 +42,7 @@ color-panel {
 	}
 
 	&:hover {
-		flex: 2;
+		flex: 1.5;
 	}
 
 	&:not(:hover) {
@@ -56,5 +56,9 @@ color-panel {
 @media screen and (orientation: portrait) {
 	body {
 		flex-direction: column;
+
+		color-panel {
+			flex-direction: row-reverse;
+		}
 	}
 }
