@@ -1,6 +1,13 @@
 class ColorPanel {
 	// <color-panel />
 
+	static isBright(color) {
+		let [r, g, b] = color.match(/\w\w/g).map(x => parseInt(x, 16));
+		let brightness = Math.sqrt(0.299 * r * r + 0.587 * g * g + 0.114 * b * b);
+
+		return brightness > 127;
+	}
+
 	created() {
 		// Show color text in panel
 		<This>
@@ -52,10 +59,7 @@ class ColorPanel {
 		this.setAttribute('style', `background-color: ${color};`);
 
 		// Choose white or black text depending on panel color brightness
-		let [r, g, b] = color.match(/\w\w/g).map(x => parseInt(x, 16));
-		let brightness = Math.sqrt(0.299 * r * r + 0.587 * g * g + 0.114 * b * b);
-
-		this.classList.toggle('dark', brightness > 127);
+		this.classList.toggle('dark', ColorPanel.isBright(color));
 
 		// Save color in attributes
 		this.setAttribute('color', color);
