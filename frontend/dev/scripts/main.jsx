@@ -10,6 +10,6 @@ for (const color of palette) {
 
 // Save palette to local storage
 function savePalette() {
-	palette = [...document.querySelectorAll('color-panel')].map(color => color.color);
+	palette = [...document.querySelectorAll('color-panel:not(.removed)')].map(color => color.color);
 	localStorage.setItem('palette', JSON.stringify(palette));
 }

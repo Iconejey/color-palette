@@ -1,5 +1,5 @@
 class ColorPanel {
-	// <color-panel .moving .slide />
+	// <color-panel .moving .slide .removed />
 
 	static getRGB(color) {
 		return color.match(/\w\w/g).map(x => parseInt(x, 16));
@@ -122,8 +122,21 @@ class ColorPanel {
 
 		// Listen for close button click
 		this.querySelector('#close').onclick = e => {
-			// Remove panel
-			this.remove();
+			// Check if app is in landscape mode
+			const ls = innerWidth > innerHeight;
+
+			// Set panel size for animation
+			if (ls) this.style.maxWidth = this.offsetWidth + 'px';
+			else this.style.maxHeight = this.offsetHeight + 'px';
+
+			// Start animation
+			this.removed = true;
+
+			// Remove panel after animation
+			setTimeout(() => this.remove(), 200);
+
+			// Save palette
+			savePalette();
 		};
 
 		// Copy btn
@@ -148,7 +161,7 @@ class ColorPanel {
 			this.moving = true;
 
 			// Check if app is in landscape mode
-			const ls = window.innerWidth > window.innerHeight;
+			const ls = innerWidth > innerHeight;
 
 			// Save mouse position
 			this.move_start = ls ? e.clientX : e.clientY;
@@ -169,7 +182,7 @@ class ColorPanel {
 			if (!this.moving) return;
 
 			// Check if app is in landscape mode
-			const ls = window.innerWidth > window.innerHeight;
+			const ls = innerWidth > innerHeight;
 
 			// Get mouse position
 			let pos = ls ? e.clientX : e.clientY;

@@ -61,7 +61,8 @@ color-panel {
 		--hover-color: #00000033;
 	}
 
-	&:hover {
+	&:hover,
+	&.removed {
 		flex: 1.5;
 		z-index: 1;
 	}
@@ -80,6 +81,18 @@ color-panel {
 	&.slide {
 		transition: none;
 		pointer-events: none;
+	}
+
+	&.removed {
+		@keyframes removed-landscape {
+			to {
+				max-width: 0;
+			}
+		}
+
+		transition: none;
+		animation: removed-landscape 0.4s ease-in-out forwards;
+		z-index: -1;
 	}
 }
 
@@ -101,6 +114,16 @@ color-panel {
 					bottom: 0;
 					transform: translate(calc(50% - 50vw), 50%);
 				}
+			}
+
+			&.removed {
+				@keyframes removed-portrait {
+					to {
+						max-height: 0;
+					}
+				}
+
+				animation: removed-portrait 0.4s ease-in-out forwards;
 			}
 		}
 	}
