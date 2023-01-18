@@ -17,4 +17,13 @@ html {
 	color: white;
 	font-family: 'Roboto';
 	-webkit-tap-highlight-color: transparent;
+	user-select: none;
+}
+
+body {
+	display: flex;
+}
+
+.icon {
+	font-family: 'Material Icons';
 }
