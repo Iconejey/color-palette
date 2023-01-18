@@ -75,6 +75,34 @@ class ColorPanel {
 			this.input.innerText = text.replace(/[^0-9a-f]/gi, '');
 			this.input.dispatchEvent(new Event('input'));
 		};
+
+		// Add btns
+		const add_left = this.querySelector('#add-left');
+		const add_right = this.querySelector('#add-right');
+
+		// Listen for left add button hover
+		add_left.onmouseenter = e => {
+			// Get left panel color or default to black
+			const left_color = this.previousElementSibling?.color ?? '#000000';
+
+			// Mix with current color
+			const mixed = ColorPanel.mix(this.color, left_color);
+
+			// Set btn background color
+			add_left.setAttribute('style', `background-color: ${mixed}; color: ${ColorPanel.isBright(mixed) ? 'black' : 'white'}`);
+		};
+
+		// Listen for right add button hover
+		add_right.onmouseenter = e => {
+			// Get right panel color or default to white
+			const right_color = this.nextElementSibling?.color ?? '#ffffff';
+
+			// Mix with current color
+			const mixed = ColorPanel.mix(this.color, right_color);
+
+			// Set btn background color
+			add_right.setAttribute('style', `background-color: ${mixed}; color: ${ColorPanel.isBright(mixed) ? 'black' : 'white'}`);
+		};
 	}
 
 	set color(color) {
