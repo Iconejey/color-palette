@@ -55,7 +55,7 @@ class ColorPanel {
 		let [r, g, b] = color.match(/\w\w/g).map(x => parseInt(x, 16));
 		let brightness = Math.sqrt(0.299 * r * r + 0.587 * g * g + 0.114 * b * b);
 
-		this.classList.toggle('dark', brightness < 128);
+		this.classList.toggle('dark', brightness > 127);
 
 		// Save color in attributes
 		this.setAttribute('color', color);
