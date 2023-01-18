@@ -187,6 +187,9 @@ class ColorPanel {
 				this.parentElement.insertBefore(this, prev);
 				this.move_start -= prev_size;
 				this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
+
+				// Save palette
+				savePalette();
 			}
 
 			// Switch with right panel
@@ -196,6 +199,9 @@ class ColorPanel {
 				this.parentElement.insertBefore(next, this);
 				this.move_start += next_size;
 				this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
+
+				// Save palette
+				savePalette();
 			}
 		};
 	}
@@ -225,6 +231,9 @@ class ColorPanel {
 
 		// Save color in attributes
 		this.setAttribute('color', color);
+
+		// Save palette
+		savePalette();
 	}
 
 	get color() {

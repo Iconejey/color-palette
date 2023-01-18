@@ -7,3 +7,9 @@ const main = document.querySelector('main');
 for (const color of palette) {
 	main.appendChild(<color-panel color={color} />);
 }
+
+// Save palette to local storage
+function savePalette() {
+	palette = [...document.querySelectorAll('color-panel')].map(color => color.color);
+	localStorage.setItem('palette', JSON.stringify(palette));
+}
