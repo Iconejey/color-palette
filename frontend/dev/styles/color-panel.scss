@@ -1,4 +1,5 @@
 color-panel {
+	position: relative;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -34,6 +35,25 @@ color-panel {
 				text-decoration: line-through;
 			}
 		}
+
+		&.add {
+			position: absolute;
+			z-index: 1;
+
+			&:not(:hover) {
+				opacity: 0;
+			}
+
+			&#add-left {
+				left: 0;
+				transform: translateX(-50%);
+			}
+
+			&#add-right {
+				right: 0;
+				transform: translateX(50%);
+			}
+		}
 	}
 
 	&.dark {
@@ -48,13 +68,14 @@ color-panel {
 	&:not(:hover) {
 		span {
 			opacity: 0;
+			pointer-events: none;
 		}
 	}
 }
 
 // Portrait mode
 @media screen and (orientation: portrait) {
-	body {
+	main {
 		flex-direction: column;
 
 		color-panel {

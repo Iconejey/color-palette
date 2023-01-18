@@ -11,6 +11,10 @@ class ColorPanel {
 	created() {
 		// Show color text in panel
 		<This>
+			<span id="add-left" class="icon add" title="Add color">
+				add
+			</span>
+
 			<span id="close" class="icon" title="Remove color">
 				close
 			</span>
@@ -22,6 +26,10 @@ class ColorPanel {
 			</span>
 			<span id="color" title="Edit color" contentEditable>
 				121212
+			</span>
+
+			<span id="add-right" class="icon add" title="Add color">
+				add
 			</span>
 		</This>;
 
