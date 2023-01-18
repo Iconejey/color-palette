@@ -119,6 +119,12 @@ class ColorPanel {
 			const panel = <color-panel color={mixed} />;
 			this.parentElement.insertBefore(panel, this.nextElementSibling);
 		};
+
+		// Listen for close button click
+		this.querySelector('#close').onclick = e => {
+			// Remove panel
+			this.remove();
+		};
 	}
 
 	getLeftMixedColor() {
