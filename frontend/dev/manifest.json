@@ -1,0 +1,19 @@
+{
+	"id": "color-palette",
+	"name": "Color Palette",
+	"short_name": "Color Palette",
+	"description": "Simple light color palette edition PWA",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"orientation": "any",
+	"background_color": "#121212",
+	"theme_color": "#121212",
+	"icon": "logo",
+	"related_applications": [
+		{
+			"platform": "web",
+			"url": "https://color-palette.nicolasgwy.dev"
+		}
+	]
+}

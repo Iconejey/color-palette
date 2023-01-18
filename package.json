@@ -1,0 +1,26 @@
+{
+    "name": "color-palette",
+    "version": "0.0.0",
+    "description": "Simple light color palette edition PWA",
+    "main": "./backend/server.js",
+    "scripts": {
+        "start": "node ./backend/server.js",
+        "prod": "pm2 start ./backend/server.js --name color-palette && npm run logs",
+        "dev": "nodemon ./backend/server.js --ignore frontend/",
+        "logs": "pm2 logs color-palette --raw",
+        "build": "compost build"
+    },
+    "author": "Nicolas Gouwy",
+    "license": "UNLICENCED",
+    "dependencies": {
+        "compression": "^1.7.4",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "express-fileupload": "^1.2.1",
+        "express-useragent": "^1.0.15",
+        "ip": "^1.1.5",
+        "node-fetch": "^2.6.7",
+        "nodemon": "^2.0.7"
+    },
+    "hompage": "https://color-palette.nicolasgwy.dev"
+}
