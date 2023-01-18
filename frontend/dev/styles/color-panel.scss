@@ -6,7 +6,7 @@ color-panel {
 	justify-content: center;
 	align-items: center;
 	gap: 2rem;
-	transition: flex 0.2s ease-in-out, transform 0.2s ease-in-out;
+	transition: flex 0.2s ease-in-out, transform 0.4s ease-in-out;
 
 	color: white;
 	--hover-color: #ffffff33;
@@ -75,6 +75,11 @@ color-panel {
 
 	&.moving {
 		transition: none;
+	}
+
+	&.slide {
+		transition: none;
+		pointer-events: none;
 	}
 }
 

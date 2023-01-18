@@ -1,5 +1,5 @@
 class ColorPanel {
-	// <color-panel .moving />
+	// <color-panel .moving .slide />
 
 	static getRGB(color) {
 		return color.match(/\w\w/g).map(x => parseInt(x, 16));
@@ -184,7 +184,17 @@ class ColorPanel {
 			if (pos - this.move_start < -size / 2) {
 				const prev = this.previousElementSibling;
 				const prev_size = ls ? prev.offsetWidth : prev.offsetHeight;
+
+				// Move previous panel before this panel
 				this.parentElement.insertBefore(this, prev);
+				prev.slide = true;
+				prev.style.transform = `translate${ls ? 'X' : 'Y'}(-${size}px)`;
+				setTimeout(() => {
+					prev.slide = false;
+					prev.style.transform = '';
+				}, 10);
+
+				// Update panel position
 				this.move_start -= prev_size;
 				this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
 
@@ -196,7 +206,17 @@ class ColorPanel {
 			if (pos - this.move_start > size / 2) {
 				const next = this.nextElementSibling;
 				const next_size = ls ? next.offsetWidth : next.offsetHeight;
+
+				// Move next panel after this panel
 				this.parentElement.insertBefore(next, this);
+				next.slide = true;
+				next.style.transform = `translate${ls ? 'X' : 'Y'}(${size}px)`;
+				setTimeout(() => {
+					next.slide = false;
+					next.style.transform = '';
+				}, 10);
+
+				// Update panel position
 				this.move_start += next_size;
 				this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
 
