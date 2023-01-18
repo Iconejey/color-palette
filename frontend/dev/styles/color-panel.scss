@@ -62,3 +62,10 @@ color-panel {
 		}
 	}
 }
+
+// Landscape mode
+@media screen and (orientation: landscape) {
+	color-panel span#move {
+		transform: rotate(90deg);
+	}
+}

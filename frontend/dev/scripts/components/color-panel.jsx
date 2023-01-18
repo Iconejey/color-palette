@@ -7,6 +7,9 @@ class ColorPanel {
 			<span id="close" class="icon" title="Remove color">
 				close
 			</span>
+			<span id="move" class="icon" title="Move color">
+				import_export
+			</span>
 			<span id="copy" class="icon" title="Copy hex code">
 				copy_all
 			</span>
