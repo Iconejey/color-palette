@@ -125,6 +125,19 @@ class ColorPanel {
 			// Remove panel
 			this.remove();
 		};
+
+		// Copy btn
+		const copy = this.querySelector('#copy');
+
+		// Listen for copy button click
+		copy.onclick = e => {
+			// Copy hex code to clipboard
+			navigator.clipboard.writeText(this.color.replace('#', ''));
+
+			// Show check icon for 500ms
+			copy.innerText = 'check';
+			setTimeout(() => (copy.innerText = 'copy_all'), 500);
+		};
 	}
 
 	getLeftMixedColor() {
