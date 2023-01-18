@@ -1,11 +1,26 @@
 class ColorPanel {
 	// <color-panel />
 
+	static getRGB(color) {
+		return color.match(/\w\w/g).map(x => parseInt(x, 16));
+	}
+
 	static isBright(color) {
-		let [r, g, b] = color.match(/\w\w/g).map(x => parseInt(x, 16));
+		let [r, g, b] = ColorPanel.getRGB(color);
 		let brightness = Math.sqrt(0.299 * r * r + 0.587 * g * g + 0.114 * b * b);
 
 		return brightness > 127;
+	}
+
+	static mix(color1, color2) {
+		let [r1, g1, b1] = ColorPanel.getRGB(color1);
+		let [r2, g2, b2] = ColorPanel.getRGB(color2);
+
+		let r = Math.floor((r1 + r2) / 2);
+		let g = Math.floor((g1 + g2) / 2);
+		let b = Math.floor((b1 + b2) / 2);
+
+		return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
 	}
 
 	created() {
