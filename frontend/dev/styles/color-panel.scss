@@ -46,12 +46,12 @@ color-panel {
 
 			&#add-left {
 				left: 0;
-				transform: translateX(-50%);
+				transform: translate(-50%, 0);
 			}
 
 			&#add-right {
 				right: 0;
-				transform: translateX(50%);
+				transform: translate(50%, 0);
 			}
 		}
 	}
@@ -80,6 +80,18 @@ color-panel {
 
 		color-panel {
 			flex-direction: row-reverse;
+
+			span.add {
+				&#add-left {
+					top: 0;
+					transform: translate(calc(50vw - 50%), -50%);
+				}
+
+				&#add-right {
+					bottom: 0;
+					transform: translate(calc(50% - 50vw), 50%);
+				}
+			}
 		}
 	}
 }
