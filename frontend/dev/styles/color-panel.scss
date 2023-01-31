@@ -21,7 +21,8 @@ color-panel {
 			background-color: var(--hover-color);
 		}
 
-		&#color {
+		&#color,
+		&#name {
 			font-size: 2rem;
 			font-weight: bold;
 			font-family: consolas;

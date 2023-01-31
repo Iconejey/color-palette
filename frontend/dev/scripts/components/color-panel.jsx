@@ -58,6 +58,8 @@ class ColorPanel {
 		// Inputs
 		this.name_input = this.querySelector('#name');
 		this.color_input = this.querySelector('#color');
+		this.name_changed = false;
+		this.name = null;
 
 		// Set color
 		this.color = this.getAttribute('color') ?? '#121212';
@@ -84,6 +86,42 @@ class ColorPanel {
 			this.color_input.innerText = text.replace(/[^0-9a-f]/gi, '');
 			this.color_input.dispatchEvent(new Event('input'));
 		};
+
+		const checkName = () => {
+			let trimmed = this.name_input.innerText.replace(/\n/g, '').trim();
+
+			// If empty, set name to color
+			if (!trimmed) {
+				this.name_input.innerText = ntc.name(this.color)[1];
+				this.name_changed = false;
+				this.name = null;
+			}
+
+			// Else set name
+			else this.name_input.innerText = trimmed;
+
+			// Save palette
+			savePalette();
+		};
+
+		// Listen for name edit
+		this.name_input.oninput = e => {
+			this.name_changed = true;
+
+			// Ignore line breaks
+			if (/\n/.test(this.name_input.innerText)) {
+				checkName();
+			}
+
+			// Else set name and save palette
+			else {
+				this.name = this.name_input.innerText.trim();
+				savePalette();
+			}
+		};
+
+		// Listen for name blur
+		this.name_input.onblur = e => checkName();
 
 		// Add btns
 		const add_left = this.querySelector('#add-left');
@@ -275,10 +313,10 @@ class ColorPanel {
 		this.setAttribute('color', color);
 
 		// Set name
-		this.name_input.innerText = ntc.name(color)[1];
+		if (!this.name_changed) this.name_input.innerText = ntc.name(color)[1];
 
 		// Save palette
-		savePalette();
+		setTimeout(() => savePalette(), 1);
 	}
 
 	get color() {
