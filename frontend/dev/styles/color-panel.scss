@@ -97,6 +97,20 @@ color-panel {
 	}
 }
 
+body:not(.edit) color-panel {
+	.add,
+	#close,
+	#move {
+		display: none;
+	}
+}
+
+body.edit color-panel {
+	#name {
+		display: none;
+	}
+}
+
 // Portrait mode
 @media screen and (orientation: portrait) {
 	main {

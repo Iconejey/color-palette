@@ -35,3 +35,10 @@ onload = () => {
 		main.appendChild(panel);
 	}
 };
+
+// When pressing Shift + E, toggle edit mode
+document.body.onkeydown = e => {
+	if (e.shiftKey && e.key === 'E') {
+		document.body.classList.toggle('edit');
+	}
+};
