@@ -33,14 +33,21 @@ class ColorPanel {
 			<span id="close" class="icon" title="Remove color">
 				close
 			</span>
+
 			<span id="move" class="icon" title="Move color">
 				import_export
 			</span>
+
 			<span id="copy" class="icon" title="Copy hex code">
 				copy_all
 			</span>
+
 			<span id="color" title="Edit color" contentEditable>
 				121212
+			</span>
+
+			<span id="name" title="Edit name" contentEditable>
+				test
 			</span>
 
 			<span id="add-right" class="icon add" title="Add color">
@@ -48,32 +55,34 @@ class ColorPanel {
 			</span>
 		</This>;
 
+		// Inputs
+		this.name_input = this.querySelector('#name');
+		this.color_input = this.querySelector('#color');
+
 		// Set color
 		this.color = this.getAttribute('color') ?? '#121212';
-
-		this.input = this.querySelector('#color');
-		this.input.innerText = this.color.replace('#', '');
+		this.color_input.innerText = this.color.replace('#', '');
 
 		// Listen for color edit
-		this.input.oninput = e => {
-			let color = this.input.innerText;
+		this.color_input.oninput = e => {
+			let color = this.color_input.innerText;
 
 			// Ignore spaces
 			if (/\s/.test(color)) {
-				this.input.innerText = color.replace(/\s/g, '');
-				color = this.input.innerText;
+				this.color_input.innerText = color.replace(/\s/g, '');
+				color = this.color_input.innerText;
 			}
 
-			const invalid = this.input.classList.toggle('invalid', !/^[0-9a-f]{6}$/i.test(color));
+			const invalid = this.color_input.classList.toggle('invalid', !/^[0-9a-f]{6}$/i.test(color));
 			if (!invalid) this.color = '#' + color;
 		};
 
 		// Listen for color paste
-		this.input.onpaste = e => {
+		this.color_input.onpaste = e => {
 			e.preventDefault();
 			const text = e.clipboardData.getData('text/plain');
-			this.input.innerText = text.replace(/[^0-9a-f]/gi, '');
-			this.input.dispatchEvent(new Event('input'));
+			this.color_input.innerText = text.replace(/[^0-9a-f]/gi, '');
+			this.color_input.dispatchEvent(new Event('input'));
 		};
 
 		// Add btns
@@ -264,6 +273,9 @@ class ColorPanel {
 
 		// Save color in attributes
 		this.setAttribute('color', color);
+
+		// Set name
+		this.name_input.innerText = ntc.name(color)[1];
 
 		// Save palette
 		savePalette();
