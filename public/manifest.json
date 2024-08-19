@@ -1,0 +1,56 @@
+{
+	"id": "color-palette",
+	"name": "Color Palette",
+	"short_name": "Color Palette",
+	"description": "Simple light color palette edition PWA",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"orientation": "any",
+	"background_color": "#121212",
+	"theme_color": "#121212",
+	"icons": [
+		{
+			"src": "https://nomark.ngwy.fr/icon/maskable/format_color_fill/1f1f1f/ffffff/1024/1024",
+			"sizes": "1024x1024",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "https://nomark.ngwy.fr/icon/maskable/format_color_fill/1f1f1f/ffffff/512/512",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "https://nomark.ngwy.fr/icon/maskable/format_color_fill/1f1f1f/ffffff/256/256",
+			"sizes": "256x256",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "https://nomark.ngwy.fr/icon/circle/format_color_fill/1f1f1f/ffffff/1024/1024",
+			"sizes": "1024x1024",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "https://nomark.ngwy.fr/icon/circle/format_color_fill/1f1f1f/ffffff/512/512",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "https://nomark.ngwy.fr/icon/circle/format_color_fill/1f1f1f/ffffff/256/256",
+			"sizes": "256x256",
+			"type": "image/png",
+			"purpose": "any"
+		}
+	],
+	"related_applications": [
+		{
+			"platform": "web",
+			"url": "https://palette.nicolasgwy.dev"
+		}
+	]
+}
