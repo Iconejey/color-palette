@@ -34,5 +34,5 @@ for (const { color, name } of palette) {
 
 // When double clicking, toggle edit mode
 main.ondblclick = e => {
-	document.body.classList.toggle('edit');
+	if (e.target.tagName === 'COLOR-PANEL') document.body.classList.toggle('edit');
 };
