@@ -1,7 +1,17 @@
 const main = $('main');
 
+const default_palette = [
+	{ color: '#f07178', name: null },
+	{ color: '#f78c6c', name: null },
+	{ color: '#ffcb6b', name: null },
+	{ color: '#c3e88d', name: null },
+	{ color: '#89ddff', name: null },
+	{ color: '#82aaff', name: null },
+	{ color: '#c792ea', name: null }
+];
+
 // Load color palette from local storage
-let palette = JSON.parse(localStorage.getItem('palette')) || [{ color: '#121212', name: null }];
+let palette = JSON.parse(localStorage.getItem('palette')) || default_palette;
 
 // Save palette to local storage
 function savePalette() {
@@ -23,11 +33,7 @@ function savePalette() {
 for (const { color, name } of palette) {
 	const panel = render`<color-panel color="${color}" />`;
 
-	if (name) {
-		panel.name = name;
-		panel.name_input.textContent = name;
-		panel.name_changed = true;
-	}
+	panel.name = name || null;
 
 	main.appendChild(panel);
 }

@@ -21,26 +21,61 @@ class ColorPanel extends CustomElement {
 		return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
 	}
 
+	updateAddBtns() {
+		// Add btns
+		const add_left = this.$('#add-left');
+		const add_right = this.$('#add-right');
+
+		// Get left panel color
+		const left_mix = this.getLeftMixedColor();
+		const left_text_color = ColorPanel.isBright(left_mix) ? 'black' : 'white';
+
+		// Set btn background color
+		add_left.setAttribute('style', `background-color: ${left_mix}; color: ${left_text_color}`);
+
+		// Listen for left add button click
+		add_left.onclick = e => {
+			// Create new panel
+			const panel = render`<color-panel color=${left_mix} />`;
+			this.parentElement.insertBefore(panel, this);
+		};
+
+		// Get right panel color
+		const right_mix = this.getRightMixedColor();
+		const right_text_color = ColorPanel.isBright(right_mix) ? 'black' : 'white';
+
+		// Set btn background color
+		add_right.setAttribute('style', `background-color: ${right_mix}; color: ${right_text_color}`);
+
+		// Listen for right add button click
+		add_right.onclick = e => {
+			// Create new panel
+			const panel = render`<color-panel color=${right_mix} />`;
+			this.parentElement.insertBefore(panel, this.nextElementSibling);
+		};
+	}
+
 	constructor() {
 		super();
 
 		this.whenReady(() => {
+			const name = this.name || '...';
+
 			// Show color text in panel
 			this.innerHTML = html`
-				<span id="add-left" class="icon add" title="Add color">add</span>
-				<span id="close" class="icon" title="Remove color">close</span>
-				<span id="move" class="icon" title="Move color">import_export</span>
-				<span id="copy" class="icon" title="Copy hex code">copy_all</span>
-				<span id="color" title="Edit color" contentEditable>121212</span>
-				<span id="name" title="Edit name" contentEditable>test</span>
 				<span id="add-right" class="icon add" title="Add color">add</span>
+				<span id="name" title="Edit name">${name}</span>
+				<span id="color" title="Edit color">121212</span>
+				<span id="copy" class="icon" title="Copy hex code">copy_all</span>
+				<span id="move" class="icon" title="Move color">import_export</span>
+				<span id="close" class="icon" title="Remove color">close</span>
+				<span id="add-left" class="icon add" title="Add color">add</span>
 			`;
 
 			// Inputs
 			this.name_input = this.$('#name');
 			this.color_input = this.$('#color');
-			this.name_changed = false;
-			this.name = null;
+			this.name_changed = this.name !== null;
 
 			// Set color
 			this.color = this.getAttribute('color') ?? '#121212';
@@ -50,21 +85,24 @@ class ColorPanel extends CustomElement {
 			this.color_input.oninput = e => {
 				let color = this.color_input.innerText;
 
-				// Ignore spaces
+				// Ignore spaces and force lower case
 				if (/\s/.test(color)) {
-					this.color_input.innerText = color.replace(/\s/g, '');
+					this.color_input.innerText = color.replace(/\s/g, '').toLowerCase();
 					color = this.color_input.innerText;
 				}
 
 				const invalid = this.color_input.classList.toggle('invalid', !/^[0-9a-f]{6}$/i.test(color));
-				if (!invalid) this.color = '#' + color;
+				if (!invalid) {
+					this.color = '#' + color;
+					this.updateAddBtns();
+				}
 			};
 
 			// Listen for color paste
 			this.color_input.onpaste = e => {
 				e.preventDefault();
 				const text = e.clipboardData.getData('text/plain');
-				this.color_input.innerText = text.replace(/[^0-9a-f]/gi, '');
+				this.color_input.innerText = text.replace(/[^0-9a-f]/gi, '').toLowerCase();
 				this.color_input.dispatchEvent(new Event('input'));
 			};
 
@@ -102,50 +140,21 @@ class ColorPanel extends CustomElement {
 			};
 
 			// Listen for name blur
-			this.name_input.onblur = e => checkName();
-
-			// Add btns
-			const add_left = this.$('#add-left');
-			const add_right = this.$('#add-right');
-
-			// Listen for left add button hover
-			add_left.onmouseenter = e => {
-				// Get left panel color
-				const mixed = this.getLeftMixedColor();
-				const text_color = ColorPanel.isBright(mixed) ? 'black' : 'white';
-
-				// Set btn background color
-				add_left.setAttribute('style', `background-color: ${mixed}; color: ${text_color}`);
+			this.name_input.onblur = e => {
+				checkName();
 			};
 
-			// Listen for left add button click
-			add_left.onclick = e => {
-				// Get left panel color
-				const mixed = this.getLeftMixedColor();
-
-				// Create new panel
-				const panel = render`<color-panel color=${mixed} />`;
-				this.parentElement.insertBefore(panel, this);
+			this.onmouseenter = e => {
+				this.updateAddBtns();
+				setTimeout(() => {
+					this.name_input.contentEditable = true;
+					this.color_input.contentEditable = true;
+				}, 100);
 			};
 
-			// Listen for right add button hover
-			add_right.onmouseenter = e => {
-				// Get right panel color
-				const mixed = this.getRightMixedColor();
-				const text_color = ColorPanel.isBright(mixed) ? 'black' : 'white';
-
-				// Set btn background color
-				add_right.setAttribute('style', `background-color: ${mixed}; color: ${text_color}`);
-			};
-
-			// Listen for right add button click
-			add_right.onclick = e => {
-				// Get right panel color
-				const mixed = this.getRightMixedColor();
-
-				// Create new panel
-				const panel = render`<color-panel color=${mixed} />`;
-				this.parentElement.insertBefore(panel, this.nextElementSibling);
+			this.onmouseleave = e => {
+				this.name_input.contentEditable = false;
+				this.color_input.contentEditable = false;
 			};
 
 			// Listen for close button click
@@ -195,8 +204,32 @@ class ColorPanel extends CustomElement {
 				this.move_start = ls ? e.clientX : e.clientY;
 			};
 
+			// Listen for move touchstart
+			move.ontouchstart = e => {
+				// Set panel to be moved
+				this.moving = true;
+
+				// Prevent scrolling
+				e.preventDefault();
+
+				// Check if app is in landscape mode
+				const ls = innerWidth > innerHeight;
+
+				// Save touch position
+				this.move_start = ls ? e.touches[0].clientX : e.touches[0].clientY;
+			};
+
 			// Listen for panel mouseup
 			this.onmouseup = e => {
+				// Reset panel to be moved
+				this.moving = false;
+
+				// Remove panel transform
+				this.style.transform = '';
+			};
+
+			// Listen for panel touchend
+			this.ontouchend = e => {
 				// Reset panel to be moved
 				this.moving = false;
 
@@ -214,6 +247,68 @@ class ColorPanel extends CustomElement {
 
 				// Get mouse position
 				let pos = ls ? e.clientX : e.clientY;
+
+				// Set panel transform
+				this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
+
+				// Get panel size
+				const size = ls ? this.offsetWidth : this.offsetHeight;
+
+				// Switch with left panel
+				if (pos - this.move_start < -size / 2) {
+					const prev = this.previousElementSibling;
+					const prev_size = ls ? prev.offsetWidth : prev.offsetHeight;
+
+					// Move previous panel before this panel
+					this.parentElement.insertBefore(this, prev);
+					prev.slide = true;
+					prev.style.transform = `translate${ls ? 'X' : 'Y'}(-${size}px)`;
+					setTimeout(() => {
+						prev.slide = false;
+						prev.style.transform = '';
+					}, 10);
+
+					// Update panel position
+					this.move_start -= prev_size;
+					this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
+
+					// Save palette
+					savePalette();
+				}
+
+				// Switch with right panel
+				if (pos - this.move_start > size / 2) {
+					const next = this.nextElementSibling;
+					const next_size = ls ? next.offsetWidth : next.offsetHeight;
+
+					// Move next panel after this panel
+					this.parentElement.insertBefore(next, this);
+					next.slide = true;
+					next.style.transform = `translate${ls ? 'X' : 'Y'}(${size}px)`;
+					setTimeout(() => {
+						next.slide = false;
+						next.style.transform = '';
+					}, 10);
+
+					// Update panel position
+					this.move_start += next_size;
+					this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;
+
+					// Save palette
+					savePalette();
+				}
+			};
+
+			// Listen for touchmove
+			this.ontouchmove = e => {
+				// Only panel is being moved
+				if (!this.moving) return;
+
+				// Check if app is in landscape mode
+				const ls = innerWidth > innerHeight;
+
+				// Get touch position
+				let pos = ls ? e.touches[0].clientX : e.touches[0].clientY;
 
 				// Set panel transform
 				this.style.transform = `translate${ls ? 'X' : 'Y'}(${pos - this.move_start}px)`;

@@ -1,121 +1,142 @@
 color-panel {
-	position: relative;
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 2rem;
-	transition: flex 0.2s ease-in-out, transform 0.4s ease-in-out;
-	color: white;
-	--hover-color: #ffffff33;
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  transition: flex 0.2s ease-in-out, transform 0.4s ease-in-out;
+  color: white;
+  --hover-color: #ffffff33;
 }
 color-panel span {
-	font-size: 2rem;
-	padding: 0.5rem;
-	border-radius: 0.5rem;
-	transition: opacity 0.2s ease-in-out;
+  font-size: 2rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: opacity 0.2s ease-in-out;
 }
-color-panel span:hover {
-	background-color: var(--hover-color);
+color-panel span:focus {
+  background-color: var(--hover-color);
 }
-color-panel span#color,
+color-panel span#color, color-panel span#name {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: consolas;
+  outline: none;
+}
+color-panel span#color::selection, color-panel span#name::selection {
+  background-color: var(--hover-color);
+}
+color-panel span#color.invalid, color-panel span#name.invalid {
+  text-decoration: line-through;
+}
 color-panel span#name {
-	font-size: 2rem;
-	font-weight: bold;
-	font-family: consolas;
-	outline: none;
-}
-color-panel span#color::selection,
-color-panel span#name::selection {
-	background-color: var(--hover-color);
-}
-color-panel span#color.invalid,
-color-panel span#name.invalid {
-	text-decoration: line-through;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: center;
 }
 color-panel span.add {
-	position: absolute;
-	z-index: 1;
-}
-color-panel span.add:not(:hover) {
-	opacity: 0;
+  position: absolute;
+  z-index: 1;
 }
 color-panel span.add#add-left {
-	left: 0;
-	transform: translate(-50%, 0);
+  left: 0;
+  transform: translate(-50%, 0);
 }
 color-panel span.add#add-right {
-	right: 0;
-	transform: translate(50%, 0);
+  right: 0;
+  transform: translate(50%, 0);
 }
 color-panel.dark {
-	color: black;
-	--hover-color: #00000033;
+  color: black;
+  --hover-color: #00000033;
 }
-color-panel:hover,
-color-panel.removed {
-	flex: 1.5;
-	z-index: 1;
+color-panel:hover, color-panel.removed {
+  flex: 1.5;
+  z-index: 1;
+}
+color-panel:not(:hover) {
+  user-select: none;
 }
 color-panel:not(:hover) span {
-	opacity: 0;
-	pointer-events: none;
+  opacity: 0;
 }
 color-panel.moving {
-	transition: none;
+  transition: none;
 }
 color-panel.slide {
-	transition: none;
-	pointer-events: none;
+  transition: none;
+  pointer-events: none;
 }
 color-panel.removed {
-	transition: none;
-	animation: removed-landscape 0.4s ease-in-out forwards;
-	z-index: -1;
+  transition: none;
+  animation: removed-landscape 0.4s ease-in-out forwards;
+  z-index: -1;
 }
 @keyframes removed-landscape {
-	to {
-		max-width: 0;
-	}
+  to {
+    max-width: 0;
+  }
 }
 
 body:not(.edit) color-panel .add,
 body:not(.edit) color-panel #close,
 body:not(.edit) color-panel #move {
-	display: none;
+  display: none;
+}
+body:not(.edit) color-panel #color {
+  pointer-events: none;
 }
 
 body.edit color-panel #name {
-	display: none;
+  display: none;
 }
 
 @media screen and (orientation: portrait) {
-	main {
-		flex-direction: column;
-	}
-	main color-panel {
-		flex-direction: row-reverse;
-	}
-	main color-panel span.add#add-left {
-		top: 0;
-		transform: translate(calc(50vw - 50%), -50%);
-	}
-	main color-panel span.add#add-right {
-		bottom: 0;
-		transform: translate(calc(50% - 50vw), 50%);
-	}
-	main color-panel.removed {
-		animation: removed-portrait 0.4s ease-in-out forwards;
-	}
-	@keyframes removed-portrait {
-		to {
-			max-height: 0;
-		}
-	}
+  main {
+    flex-direction: column;
+  }
+  main color-panel {
+    flex-direction: row;
+  }
+  main color-panel span.add#add-left {
+    top: 0;
+    transform: translate(calc(50vw - 50%), -50%);
+  }
+  main color-panel span.add#add-right {
+    bottom: 0;
+    transform: translate(calc(50% - 50vw), 50%);
+  }
+  main color-panel.removed {
+    animation: removed-portrait 0.4s ease-in-out forwards;
+  }
+  @keyframes removed-portrait {
+    to {
+      max-height: 0;
+    }
+  }
 }
 @media screen and (orientation: landscape) {
-	color-panel span#move {
-		transform: rotate(90deg);
-	}
+  color-panel span#move {
+    transform: rotate(90deg);
+  }
+  color-panel #name {
+    text-wrap: wrap !important;
+    max-width: 100% !important;
+  }
+}
+@media screen and (min-width: 450px) {
+  color-panel span:hover {
+    background-color: var(--hover-color);
+  }
+}
+@media screen and (max-width: 450px) {
+  color-panel #name:focus {
+    overflow: visible;
+  }
+  color-panel #name:focus + #color {
+    display: none;
+  }
 }

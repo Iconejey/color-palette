@@ -2,7 +2,7 @@ color-panel {
 	position: relative;
 	flex: 1;
 	display: flex;
-	flex-direction: column;
+	flex-direction: column-reverse;
 	justify-content: center;
 	align-items: center;
 	gap: 2rem;
@@ -17,7 +17,7 @@ color-panel {
 		border-radius: 0.5rem;
 		transition: opacity 0.2s ease-in-out;
 
-		&:hover {
+		&:focus {
 			background-color: var(--hover-color);
 		}
 
@@ -37,13 +37,20 @@ color-panel {
 			}
 		}
 
+		&#name {
+			text-wrap: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			text-align: center;
+		}
+
 		&.add {
 			position: absolute;
 			z-index: 1;
 
-			&:not(:hover) {
-				opacity: 0;
-			}
+			// &:not(:hover) {
+			// 	opacity: 0;
+			// }
 
 			&#add-left {
 				left: 0;
@@ -69,9 +76,10 @@ color-panel {
 	}
 
 	&:not(:hover) {
+		user-select: none;
+
 		span {
 			opacity: 0;
-			pointer-events: none;
 		}
 	}
 
@@ -103,6 +111,11 @@ body:not(.edit) color-panel {
 	#move {
 		display: none;
 	}
+
+	// Prevent text edition
+	#color {
+		pointer-events: none;
+	}
 }
 
 body.edit color-panel {
@@ -117,7 +130,7 @@ body.edit color-panel {
 		flex-direction: column;
 
 		color-panel {
-			flex-direction: row-reverse;
+			flex-direction: row;
 
 			span.add {
 				&#add-left {
@@ -146,7 +159,32 @@ body.edit color-panel {
 
 // Landscape mode
 @media screen and (orientation: landscape) {
-	color-panel span#move {
-		transform: rotate(90deg);
+	color-panel {
+		span#move {
+			transform: rotate(90deg);
+		}
+
+		#name {
+			text-wrap: wrap !important;
+			max-width: 100% !important;
+		}
+	}
+}
+
+// Desktop
+@media screen and (min-width: 450px) {
+	color-panel span:hover {
+		background-color: var(--hover-color);
+	}
+}
+
+// Mobile
+@media screen and (max-width: 450px) {
+	color-panel #name:focus {
+		overflow: visible;
+
+		& + #color {
+			display: none;
+		}
 	}
 }
