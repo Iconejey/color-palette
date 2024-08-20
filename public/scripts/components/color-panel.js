@@ -28,7 +28,7 @@ class ColorPanel extends CustomElement {
 
 		// Get left panel color
 		const left_mix = this.getLeftMixedColor();
-		const left_text_color = ColorPanel.isBright(left_mix) ? 'black' : 'white';
+		const left_text_color = ColorPanel.isBright(left_mix) ? '#00000088' : 'ffffff88';
 
 		// Set btn background color
 		add_left.setAttribute('style', `background-color: ${left_mix}; color: ${left_text_color}`);
@@ -42,7 +42,7 @@ class ColorPanel extends CustomElement {
 
 		// Get right panel color
 		const right_mix = this.getRightMixedColor();
-		const right_text_color = ColorPanel.isBright(right_mix) ? 'black' : 'white';
+		const right_text_color = ColorPanel.isBright(right_mix) ? '#00000088' : 'ffffff88';
 
 		// Set btn background color
 		add_right.setAttribute('style', `background-color: ${right_mix}; color: ${right_text_color}`);

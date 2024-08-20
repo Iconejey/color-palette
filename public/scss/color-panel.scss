@@ -8,7 +8,7 @@ color-panel {
 	gap: 2rem;
 	transition: flex 0.2s ease-in-out, transform 0.4s ease-in-out;
 
-	color: white;
+	color: #ffffff88;
 	--hover-color: #ffffff33;
 
 	span {
@@ -23,7 +23,6 @@ color-panel {
 
 		&#color,
 		&#name {
-			font-size: 2rem;
 			font-weight: bold;
 			font-family: consolas;
 			outline: none;
@@ -42,6 +41,15 @@ color-panel {
 			text-overflow: ellipsis;
 			overflow: hidden;
 			text-align: center;
+
+			&:focus {
+				overflow: visible;
+				text-overflow: none;
+
+				& + #color {
+					display: none;
+				}
+			}
 		}
 
 		&.add {
@@ -65,7 +73,7 @@ color-panel {
 	}
 
 	&.dark {
-		color: black;
+		color: #00000088;
 		--hover-color: #00000033;
 	}
 
@@ -167,6 +175,7 @@ body.edit color-panel {
 		#name {
 			text-wrap: wrap !important;
 			max-width: 100% !important;
+			font-size: 1.5rem;
 		}
 	}
 }
@@ -180,11 +189,15 @@ body.edit color-panel {
 
 // Mobile
 @media screen and (max-width: 450px) {
-	color-panel #name:focus {
-		overflow: visible;
-
-		& + #color {
-			display: none;
+	color-panel {
+		#name,
+		#color {
+			font-size: 1.5rem;
 		}
+
+		// #name {
+		// 	text-wrap: wrap !important;
+		// 	max-width: 100% !important;
+		// }
 	}
 }
