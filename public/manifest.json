@@ -11,37 +11,37 @@
 	"theme_color": "#121212",
 	"icons": [
 		{
-			"src": "https://nomark.ngwy.fr/icon/maskable/water_drop/f9f9f9/000000/1024/1024",
+			"src": "https://icon.nosuite.fr/maskable/water_drop/f9f9f9/000000/1024/1024",
 			"sizes": "1024x1024",
 			"type": "image/png",
 			"purpose": "maskable"
 		},
 		{
-			"src": "https://nomark.ngwy.fr/icon/maskable/water_drop/f9f9f9/000000/512/512",
+			"src": "https://icon.nosuite.fr/maskable/water_drop/f9f9f9/000000/512/512",
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "maskable"
 		},
 		{
-			"src": "https://nomark.ngwy.fr/icon/maskable/water_drop/f9f9f9/000000/256/256",
+			"src": "https://icon.nosuite.fr/maskable/water_drop/f9f9f9/000000/256/256",
 			"sizes": "256x256",
 			"type": "image/png",
 			"purpose": "maskable"
 		},
 		{
-			"src": "https://nomark.ngwy.fr/icon/circle/water_drop/f9f9f9/000000/1024/1024",
+			"src": "https://icon.nosuite.fr/circle/water_drop/f9f9f9/000000/1024/1024",
 			"sizes": "1024x1024",
 			"type": "image/png",
 			"purpose": "any"
 		},
 		{
-			"src": "https://nomark.ngwy.fr/icon/circle/water_drop/f9f9f9/000000/512/512",
+			"src": "https://icon.nosuite.fr/circle/water_drop/f9f9f9/000000/512/512",
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "any"
 		},
 		{
-			"src": "https://nomark.ngwy.fr/icon/circle/water_drop/f9f9f9/000000/256/256",
+			"src": "https://icon.nosuite.fr/circle/water_drop/f9f9f9/000000/256/256",
 			"sizes": "256x256",
 			"type": "image/png",
 			"purpose": "any"
@@ -50,7 +50,7 @@
 	"related_applications": [
 		{
 			"platform": "web",
-			"url": "https://palette.ngwy.fr"
+			"url": "https://palette.nosuite.fr"
 		}
 	]
 }
